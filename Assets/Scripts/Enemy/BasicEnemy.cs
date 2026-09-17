@@ -1,16 +1,25 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-public class BasicEnemy : MonoBehaviour , IDamageable
+public class BasicEnemy : MonoBehaviour, IDamageable
 {
     [Header("Configurações")]
-    public float velocidade = 2f;
+    [SerializeField] private float velocidade = 2f;
+
+    [Header("Vida")]
+    [SerializeField] private float vidaMaxima = 30f;
+    [SerializeField] private Slider barraVida;
 
     [Header("Referência")]
-    public Transform player;
+    [SerializeField] private Transform player;
 
-    public void TakeDamage(float damage)
+    private float vidaAtual;
+
+    private void Start()
     {
-        throw new System.NotImplementedException();
+        vidaAtual = vidaMaxima;
+
+        barraVida.value = 1f;
     }
 
     private void Update()
@@ -23,6 +32,23 @@ public class BasicEnemy : MonoBehaviour , IDamageable
         transform.position += (Vector3)direcao * velocidade * Time.deltaTime;
 
         VirarParaPlayer();
+    }
+
+    public void TakeDamage(float damage)
+    {
+        vidaAtual -= damage;
+
+        barraVida.value = vidaAtual / vidaMaxima;
+
+        if (vidaAtual <= 0)
+        {
+            Morrer();
+        }
+    }
+
+    private void Morrer()
+    {
+        Destroy(gameObject);
     }
 
     private void VirarParaPlayer()
