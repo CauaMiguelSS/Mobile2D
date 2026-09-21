@@ -7,7 +7,7 @@ public class BasicEnemy : MonoBehaviour, IDamageable
     [SerializeField] private float velocidade = 2f;
 
     [Header("Vida")]
-    [SerializeField] private float vidaMaxima = 30f;
+    [SerializeField] private float vidaMaxima = 100f;
     [SerializeField] private Slider barraVida;
 
     [Header("Referência")]
@@ -15,11 +15,14 @@ public class BasicEnemy : MonoBehaviour, IDamageable
 
     private float vidaAtual;
 
-    private void Start()
+    public float VidaMaximaBase => vidaMaxima;
+
+    private void Awake()
     {
         vidaAtual = vidaMaxima;
 
-        barraVida.value = 1f;
+        if (barraVida != null)
+            barraVida.value = 1f;
     }
 
     private void Update()
@@ -34,11 +37,25 @@ public class BasicEnemy : MonoBehaviour, IDamageable
         VirarParaPlayer();
     }
 
+    public void SetVidaMaxima(float novaVida)
+    {
+        vidaMaxima = novaVida;
+        vidaAtual = vidaMaxima;
+
+        if (barraVida != null) 
+        {
+            barraVida.value = 1f;
+        }
+    }
+
     public void TakeDamage(float damage)
     {
         vidaAtual -= damage;
 
-        barraVida.value = vidaAtual / vidaMaxima;
+        if (barraVida != null)
+        {
+            barraVida.value = vidaAtual / vidaMaxima;
+        }
 
         if (vidaAtual <= 0)
         {
@@ -55,19 +72,11 @@ public class BasicEnemy : MonoBehaviour, IDamageable
     {
         if (player.position.x > transform.position.x)
         {
-            transform.localScale = new Vector3(
-                Mathf.Abs(transform.localScale.x),
-                transform.localScale.y,
-                transform.localScale.z
-            );
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
         else if (player.position.x < transform.position.x)
         {
-            transform.localScale = new Vector3(
-                -Mathf.Abs(transform.localScale.x),
-                transform.localScale.y,
-                transform.localScale.z
-            );
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
     }
 }

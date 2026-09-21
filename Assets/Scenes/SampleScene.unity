@@ -213,6 +213,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 7828947405036067863, guid: 8a9e75fe0b1379246b25d7f8c9c163d6, type: 3}
   quantidadeInimigos: 10
   intervaloSpawn: 8
+  aumentoVidaPorSpawn: 0.1
   pontosSpawn:
   - {fileID: 893530887}
   - {fileID: 313784729}

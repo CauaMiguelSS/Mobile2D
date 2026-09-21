@@ -2,10 +2,15 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [Header("Configurações")]
+    [Header("Inimigo")]
     [SerializeField] private GameObject enemyPrefab;
+
+    [Header("Quantidade")]
     [SerializeField] private int quantidadeInimigos = 10;
     [SerializeField] private float intervaloSpawn = 1f;
+
+    [Header("Escala de Vida")]
+    [SerializeField] private float aumentoVidaPorSpawn = 0.10f;
 
     [Header("Pontos de Spawn")]
     [SerializeField] private Transform[] pontosSpawn;
@@ -35,7 +40,18 @@ public class EnemySpawner : MonoBehaviour
 
         Transform ponto = pontosSpawn[indice];
 
-        Instantiate(enemyPrefab, ponto.position, Quaternion.identity);
+        GameObject objetoInimigo = Instantiate(enemyPrefab, ponto.position, Quaternion.identity);
+
+        BasicEnemy enemy = objetoInimigo.GetComponent<BasicEnemy>();
+
+        if (enemy != null)
+        {
+            float multiplicador = Mathf.Pow(1f + aumentoVidaPorSpawn, inimigosSpawnados);
+
+            float vidaEscalada = enemy.VidaMaximaBase * multiplicador;
+
+            enemy.SetVidaMaxima(vidaEscalada);
+        }
 
         inimigosSpawnados++;
     }
