@@ -524,8 +524,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   enemyPrefab: {fileID: 7828947405036067863, guid: 8a9e75fe0b1379246b25d7f8c9c163d6, type: 3}
-  quantidadeInimigos: 10
-  intervaloSpawn: 8
+  quantidadeInimigos: 100
+  intervaloSpawn: 3
   aumentoVidaPorSpawn: 0.1
   pontosSpawn:
   - {fileID: 893530887}
@@ -2696,7 +2696,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7486339463956318519, guid: 04aa68c5ba7c8744599fd115ee06ae73, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
