@@ -152,7 +152,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pitchfork
   speed: 6
-  damagePerSecond: 20
+  bounceAngle: 37
+  damagePerSecond: 500
   wallLayer:
     serializedVersion: 2
     m_Bits: 128

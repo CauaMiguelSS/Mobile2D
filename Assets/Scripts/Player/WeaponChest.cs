@@ -1,23 +1,22 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class WeaponChest : MonoBehaviour
+public class WeaponChest : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] private WeaponManager weaponManager;
-
-    private bool aberto;
+    private WeaponManager weaponManager;
 
     private void Start()
     {
-        if (weaponManager == null)
-            weaponManager = FindFirstObjectByType<WeaponManager>();
+        weaponManager = FindFirstObjectByType<WeaponManager>();
     }
 
-    private void OnMouseDown()
+    public void OnPointerClick(PointerEventData eventData)
     {
-        if (aberto)
+        if (weaponManager == null)
+        {
+            Debug.LogError("WeaponManager não encontrado!");
             return;
-
-        aberto = true;
+        }
 
         string arma = weaponManager.DesbloquearArma();
 

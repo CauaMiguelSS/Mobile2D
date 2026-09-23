@@ -142,6 +142,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Scythe
   velocidade: 8
   distanciaMaxima: 5
-  dano: 10
   tempoVida: 5
   velocidadeRotacao: 500
+  dano: 60

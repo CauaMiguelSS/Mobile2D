@@ -13,9 +13,6 @@ public class BasicEnemy : MonoBehaviour, IDamageable
     [Header("Referência")]
     [SerializeField] private Transform player;
 
-    [SerializeField] private bool inimigoPremiado;
-    [SerializeField] private GameObject bauPrefab;
-
     private float vidaAtual;
 
     public float VidaMaximaBase => vidaMaxima;
@@ -68,13 +65,11 @@ public class BasicEnemy : MonoBehaviour, IDamageable
 
     private void Morrer()
     {
-        if (inimigoPremiado && bauPrefab != null)
+        EnemyKillManager killManager = FindFirstObjectByType<EnemyKillManager>();
+
+        if (killManager != null)
         {
-            Instantiate(
-                bauPrefab,
-                transform.position,
-                Quaternion.identity
-            );
+            killManager.InimigoMorreu(transform.position);
         }
 
         Destroy(gameObject);

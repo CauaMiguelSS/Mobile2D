@@ -150,4 +150,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e680e75ae4d6a4583af286bc2a5740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponChest
-  weaponManager: {fileID: 0}
+  weaponManager: {fileID: 3157105713686817351, guid: e7c2804c2a483c742aa89432eda4fafe, type: 3}

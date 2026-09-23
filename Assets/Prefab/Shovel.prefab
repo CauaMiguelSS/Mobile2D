@@ -143,4 +143,4 @@ MonoBehaviour:
   player: {fileID: 0}
   distancia: 2
   velocidadeOrbita: 180
-  danoPorSegundo: 20
+  danoPorSegundo: 60

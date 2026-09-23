@@ -106,7 +106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   velocidade: 10
   tempoDeVida: 3
-  dano: 10
+  dano: 20
 --- !u!61 &-1836031994565933551
 BoxCollider2D:
   m_ObjectHideFlags: 0

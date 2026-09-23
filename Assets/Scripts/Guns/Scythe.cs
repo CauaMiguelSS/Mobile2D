@@ -3,17 +3,17 @@ using UnityEngine;
 public class Scythe : MonoBehaviour
 {
     [Header("Movimento")]
-    [SerializeField] private float velocidade = 8f;
-    [SerializeField] private float distanciaMaxima = 3f;
-
-    [Header("Dano")]
-    [SerializeField] private float dano = 10f;
+    [SerializeField] private float velocidade = 5f;
+    [SerializeField] private float distanciaMaxima = 5f;
     [SerializeField] private float tempoVida = 3f;
     [SerializeField] private float velocidadeRotacao = 500f;
 
+    [Header("Dano")]
+    [SerializeField] private float dano = 10f;
+
     private Vector2 direcao;
     private Vector3 posicaoInicial;
-    private bool chegou;
+    private bool parada;
 
     public void Lancar(Vector2 novaDirecao)
     {
@@ -28,9 +28,7 @@ public class Scythe : MonoBehaviour
 
     private void Update()
     {
-        transform.Rotate(0f, 0f, velocidadeRotacao * Time.deltaTime);
-
-        if (!chegou)
+        if (!parada)
         {
             transform.position += (Vector3)(direcao * velocidade * Time.deltaTime);
 
@@ -38,10 +36,23 @@ public class Scythe : MonoBehaviour
 
             if (distanciaPercorrida >= distanciaMaxima)
             {
-                chegou = true;
+                parada = true;
             }
         }
+
+        transform.Rotate(0f, 0f, velocidadeRotacao * Time.deltaTime);
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        int enemyLayer = LayerMask.NameToLayer("Enemy");
+
+        if (other.gameObject.layer != enemyLayer)
+            return;
+
+        parada = true;
+    }
+
     private void OnTriggerStay2D(Collider2D other)
     {
         int enemyLayer = LayerMask.NameToLayer("Enemy");
