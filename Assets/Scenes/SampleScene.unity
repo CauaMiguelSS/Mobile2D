@@ -524,9 +524,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   enemyPrefab: {fileID: 7828947405036067863, guid: 8a9e75fe0b1379246b25d7f8c9c163d6, type: 3}
-  quantidadeInimigos: 20
+  quantidadeInimigos: 500
   intervaloSpawn: 5
-  aumentoVidaPorSpawn: 0.1
+  aumentoVidaPorSpawn: 0.08
   pontosSpawn:
   - {fileID: 893530887}
   - {fileID: 313784729}
@@ -2761,7 +2761,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2266025597325174558, guid: 75a573259bc18504582705bcfcb3e9cd, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2768252530658134341, guid: 75a573259bc18504582705bcfcb3e9cd, type: 3}
       propertyPath: m_Name
