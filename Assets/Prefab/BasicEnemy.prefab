@@ -286,6 +286,8 @@ MonoBehaviour:
   vidaMaxima: 30
   barraVida: {fileID: 4790735279466341004}
   player: {fileID: 5529013766198302729, guid: 75a573259bc18504582705bcfcb3e9cd, type: 3}
+  inimigoPremiado: 0
+  bauPrefab: {fileID: 3386461449298293004, guid: 1869fa54297c3a04b8852ead0b0fb28d, type: 3}
 --- !u!61 &6045496706335689696
 BoxCollider2D:
   m_ObjectHideFlags: 0
