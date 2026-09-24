@@ -226,8 +226,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BasicEnemy
   velocidade: 0.5
-  vidaMaxima: 30
+  vidaMaxima: 20
   barraVida: {fileID: 4790735279466341004}
+  valorInimigo: 1
   player: {fileID: 5529013766198302729, guid: 75a573259bc18504582705bcfcb3e9cd, type: 3}
 --- !u!61 &6045496706335689696
 BoxCollider2D:

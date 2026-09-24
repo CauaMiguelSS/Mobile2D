@@ -10,6 +10,9 @@ public class BasicEnemy : MonoBehaviour, IDamageable
     [SerializeField] private float vidaMaxima = 100f;
     [SerializeField] private Slider barraVida;
 
+    [Header("Pontuação")]
+    [SerializeField] private int valorInimigo = 1;
+
     [Header("Referência")]
     [SerializeField] private Transform player;
 
@@ -30,9 +33,11 @@ public class BasicEnemy : MonoBehaviour, IDamageable
         if (player == null)
             return;
 
-        Vector2 direcao = (player.position - transform.position).normalized;
+        Vector2 direcao =
+            (player.position - transform.position).normalized;
 
-        transform.position += (Vector3)direcao * velocidade * Time.deltaTime;
+        transform.position +=
+            (Vector3)direcao * velocidade * Time.deltaTime;
 
         VirarParaPlayer();
     }
@@ -42,10 +47,8 @@ public class BasicEnemy : MonoBehaviour, IDamageable
         vidaMaxima = novaVida;
         vidaAtual = vidaMaxima;
 
-        if (barraVida != null) 
-        {
+        if (barraVida != null)
             barraVida.value = 1f;
-        }
     }
 
     public void TakeDamage(float damage)
@@ -69,7 +72,7 @@ public class BasicEnemy : MonoBehaviour, IDamageable
 
         if (killManager != null)
         {
-            killManager.InimigoMorreu(transform.position);
+            killManager.InimigoMorreu(transform.position, valorInimigo);
         }
 
         Destroy(gameObject);

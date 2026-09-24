@@ -8,7 +8,6 @@ public class WeaponManager : MonoBehaviour
 
     private void Awake()
     {
-        // Primeira arma = arma inicial
         for (int i = 0; i < armas.Count; i++)
         {
             if (armas[i] != null)
@@ -30,13 +29,7 @@ public class WeaponManager : MonoBehaviour
             }
         }
 
-        if (bloqueadas.Count == 0)
-        {
-            return "Todas as armas já foram desbloqueadas!";
-        }
-
-        GameObject armaEscolhida =
-            bloqueadas[Random.Range(0, bloqueadas.Count)];
+        GameObject armaEscolhida = bloqueadas[Random.Range(0, bloqueadas.Count)];
 
         armaEscolhida.SetActive(true);
 

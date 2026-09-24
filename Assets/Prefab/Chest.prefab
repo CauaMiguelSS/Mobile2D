@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.65, y: 0.47, z: 0}
-  m_LocalScale: {x: 96.70844, y: 96.70844, z: 96.70844}
+  m_LocalScale: {x: 0.98261297, y: 0.98261297, z: 0.98261297}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -126,17 +126,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0017624758, y: -0.0010845978}
+  m_Offset: {x: 0.2024787, y: -0.12042728}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.017010309, y: 0.013402062}
+    oldSize: {x: 1.9411764, y: 1.5294118}
     newSize: {x: 0.017010309, y: 0.013402062}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.020535257, y: 0.016113557}
+  m_Size: {x: 1.5632926, y: 1.3107913}
   m_EdgeRadius: 0
 --- !u!114 &477185989396492100
 MonoBehaviour:
@@ -150,4 +150,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e680e75ae4d6a4583af286bc2a5740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponChest
-  weaponManager: {fileID: 3157105713686817351, guid: e7c2804c2a483c742aa89432eda4fafe, type: 3}

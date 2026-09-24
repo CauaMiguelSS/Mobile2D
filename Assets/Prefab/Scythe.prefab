@@ -144,4 +144,4 @@ MonoBehaviour:
   distanciaMaxima: 5
   tempoVida: 5
   velocidadeRotacao: 500
-  dano: 60
+  dano: 500

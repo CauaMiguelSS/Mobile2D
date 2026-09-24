@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     [Header("Referências")]
     [SerializeField] private AimingOrbit aimingOrbit;
 
+    private SpriteRenderer spriteRenderer;
+
     private bool morreu;
 
     private void Start()
@@ -18,19 +20,18 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        VirarParaMira();
-    }
-
-    private void VirarParaMira()
-    {
         if (aimingOrbit.Direcao.x > 0)
         {
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            spriteRenderer.flipX = false;
         }
         else if (aimingOrbit.Direcao.x < 0)
         {
-            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            spriteRenderer.flipX = true;
         }
+    }
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

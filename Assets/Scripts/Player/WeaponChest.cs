@@ -1,7 +1,6 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class WeaponChest : MonoBehaviour, IPointerClickHandler
+public class WeaponChest : MonoBehaviour
 {
     private WeaponManager weaponManager;
 
@@ -10,17 +9,14 @@ public class WeaponChest : MonoBehaviour, IPointerClickHandler
         weaponManager = FindFirstObjectByType<WeaponManager>();
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void Abrir()
     {
         if (weaponManager == null)
         {
-            Debug.LogError("WeaponManager não encontrado!");
             return;
         }
 
         string arma = weaponManager.DesbloquearArma();
-
-        Debug.Log("Conseguiu a arma: " + arma);
 
         Destroy(gameObject);
     }
