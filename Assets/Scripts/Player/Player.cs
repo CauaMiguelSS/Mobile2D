@@ -1,29 +1,64 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour, IDamageable
+public class Player : MonoBehaviour
 {
-    [Header("Vida")]
-    [SerializeField] private float vidaMaxima = 100f;
+    [Header("Morte")]
+    [SerializeField] private Sprite spriteMorte;
+    [SerializeField] private GameObject painelMorte;
 
-    private float vidaAtual;
+    [Header("Referências")]
+    [SerializeField] private AimingOrbit aimingOrbit;
+
+    private bool morreu;
 
     private void Start()
     {
-        vidaAtual = vidaMaxima;
+        painelMorte.SetActive(false);
     }
 
-    public void TakeDamage(float damage)
+    private void Update()
     {
-        vidaAtual -= damage;
+        VirarParaMira();
+    }
 
-        if (vidaAtual <= 0)
+    private void VirarParaMira()
+    {
+        if (aimingOrbit.Direcao.x > 0)
         {
-            Morrer();
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
+        else if (aimingOrbit.Direcao.x < 0)
+        {
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        int enemyLayer = LayerMask.NameToLayer("Enemy");
+
+        if (collision.gameObject.layer != enemyLayer)
+            return;
+
+        Morrer();
     }
 
     private void Morrer()
     {
-        Debug.Log("Player morreu!");
+        if (morreu)
+            return;
+
+        morreu = true;
+
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (spriteRenderer != null && spriteMorte != null)
+        {
+            spriteRenderer.sprite = spriteMorte;
+        }
+
+        painelMorte.SetActive(true);
+
+        Time.timeScale = 0f;
     }
 }
