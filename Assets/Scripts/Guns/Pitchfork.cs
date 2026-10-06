@@ -78,6 +78,13 @@ public class Pitchfork : MonoBehaviour
         {
             enemy.TakeDamage(damagePerSecond * Time.deltaTime);
         }
+
+        RandomEventManager evento = FindFirstObjectByType<RandomEventManager>();
+
+        if (evento != null)
+        {
+            evento.ReceberDanoCausado(damagePerSecond);
+        }
     }
 
     private void RotateToDirection()

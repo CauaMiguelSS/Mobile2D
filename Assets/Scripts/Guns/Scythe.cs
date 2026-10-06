@@ -66,5 +66,12 @@ public class Scythe : MonoBehaviour
         {
             inimigo.TakeDamage(dano * Time.deltaTime);
         }
+
+        RandomEventManager evento = FindFirstObjectByType<RandomEventManager>();
+
+        if (evento != null)
+        {
+            evento.ReceberDanoCausado(dano);
+        }
     }
 }

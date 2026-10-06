@@ -22,6 +22,14 @@ public class Projectile : MonoBehaviour
         Destroy(gameObject, tempoDeVida);
     }
 
+    public void AplicarBuff(WeaponBuff buff)
+    {
+        dano *= buff.danoMultiplier;
+        velocidade *= buff.velocidadeMultiplier;
+
+        transform.localScale *= buff.tamanhoMultiplier;
+    }
+
     private void Update()
     {
         transform.position += (Vector3)(direcao * velocidade * Time.deltaTime);
@@ -39,6 +47,13 @@ public class Projectile : MonoBehaviour
         if (damageable != null)
         {
             damageable.TakeDamage(dano);
+        }
+
+        RandomEventManager evento = FindFirstObjectByType<RandomEventManager>();
+
+        if (evento != null)
+        {
+            evento.ReceberDanoCausado(dano);
         }
 
         Destroy(gameObject);

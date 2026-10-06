@@ -35,5 +35,12 @@ public class Shovel : MonoBehaviour
 
         if (inimigo != null)
             inimigo.TakeDamage(danoPorSegundo * Time.deltaTime);
+
+        RandomEventManager evento = FindFirstObjectByType<RandomEventManager>();
+
+        if (evento != null)
+        {
+            evento.ReceberDanoCausado(danoPorSegundo);
+        }
     }
 }

@@ -7,10 +7,17 @@ public class AutoShoot : MonoBehaviour
     [SerializeField] private Transform pontoDeTiro;
     [SerializeField] private AimingOrbit aimingOrbit;
 
+    private WeaponBuff buff;
+
     [Header("Configurações")]
     [SerializeField] private float intervaloTiro = 0.5f;
 
     private float contador;
+
+    private void Start()
+    {
+        buff = GetComponent<WeaponBuff>();
+    }
 
     private void Update()
     {
@@ -28,5 +35,10 @@ public class AutoShoot : MonoBehaviour
         GameObject projetil = Instantiate(projectilePrefab, pontoDeTiro.position, Quaternion.identity);
 
         projetil.GetComponent<Projectile>().SetDirection(aimingOrbit.Direcao);
+
+        if (buff != null)
+        {
+            projetil.GetComponent<Projectile>().AplicarBuff(buff);
+        }
     }
 }

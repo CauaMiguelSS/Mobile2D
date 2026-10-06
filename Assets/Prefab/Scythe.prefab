@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4786664437687977448}
   - component: {fileID: 1571028163207491344}
   - component: {fileID: 6877153653872888972}
+  - component: {fileID: 7593507996567709764}
   m_Layer: 0
   m_Name: Scythe
   m_TagString: Untagged
@@ -145,3 +146,19 @@ MonoBehaviour:
   tempoVida: 5
   velocidadeRotacao: 500
   dano: 500
+--- !u!114 &7593507996567709764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8759615194202457931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6cc0a65165bbd1438045813c92fe939, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponBuff
+  danoMultiplier: 1
+  velocidadeMultiplier: 1
+  tamanhoMultiplier: 1
+  intervaloMultiplier: 1

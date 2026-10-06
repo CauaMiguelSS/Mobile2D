@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4985754336651522709}
   - component: {fileID: 1563791041042163850}
   - component: {fileID: -1836031994565933551}
+  - component: {fileID: -1932648916831840080}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -153,3 +154,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.0030927835, y: 0.0030927835}
   m_EdgeRadius: 0
+--- !u!114 &-1932648916831840080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5176876556872209673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6cc0a65165bbd1438045813c92fe939, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponBuff
+  danoMultiplier: 1
+  velocidadeMultiplier: 1
+  tamanhoMultiplier: 1
+  intervaloMultiplier: 1
