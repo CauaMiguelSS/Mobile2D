@@ -814,6 +814,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuffCard
   texto: {fileID: 1831993272}
+  botao: {fileID: 0}
 --- !u!114 &191279579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1720,7 +1721,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &342035268
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3813,9 +3814,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RandomEventManager
   barra: {fileID: 1031008321}
   danoNecessario: 100
-  aumentoDanoNecessario: 50
+  aumentoPorEvento: 1.25
   painel: {fileID: 1841803129}
-  cartas: []
+  cartas:
+  - {fileID: 191279578}
+  - {fileID: 840116933}
+  - {fileID: 1743423542}
 --- !u!4 &689891760
 Transform:
   m_ObjectHideFlags: 0
@@ -4458,6 +4462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuffCard
   texto: {fileID: 17545728}
+  botao: {fileID: 0}
 --- !u!114 &840116934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7237,6 +7242,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 5176876556872209673, guid: 9e266551f0273764bb6ea9de356b909b, type: 3}
   pontoDeTiro: {fileID: 1131242950}
   aimingOrbit: {fileID: 736016421}
+  buff: {fileID: -1932648916831840080, guid: 9e266551f0273764bb6ea9de356b909b, type: 3}
   intervaloTiro: 0.8
 --- !u!114 &1411215581
 MonoBehaviour:
@@ -8623,6 +8629,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuffCard
   texto: {fileID: 1016520246}
+  botao: {fileID: 0}
 --- !u!114 &1743423543
 MonoBehaviour:
   m_ObjectHideFlags: 0

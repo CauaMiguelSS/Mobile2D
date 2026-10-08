@@ -10,37 +10,65 @@ public class Shovel : MonoBehaviour
     [Header("Dano")]
     [SerializeField] private float danoPorSegundo = 20f;
 
+    private WeaponBuff buff;
+    private Vector3 escalaOriginal;
+
     private float angulo;
+
+    private void Start()
+    {
+        buff = GetComponent<WeaponBuff>();
+
+        escalaOriginal = transform.localScale;
+    }
 
     private void Update()
     {
-        angulo += velocidadeOrbita * Time.deltaTime;
+        angulo +=
+            velocidadeOrbita *
+            buff.Velocidade *
+            Time.deltaTime;
 
-        float x = Mathf.Cos(angulo * Mathf.Deg2Rad) * distancia;
-        float y = Mathf.Sin(angulo * Mathf.Deg2Rad) * distancia;
+        float x =
+            Mathf.Cos(angulo * Mathf.Deg2Rad) *
+            distancia;
 
-        transform.position = player.position + new Vector3(x, y, 0f);
+        float y =
+            Mathf.Sin(angulo * Mathf.Deg2Rad) *
+            distancia;
 
-        transform.Rotate(0f, 0f, velocidadeOrbita * Time.deltaTime);
+        transform.position =
+            player.position +
+            new Vector3(x, y, 0f);
+
+        transform.Rotate(
+            0f,
+            0f,
+            velocidadeOrbita * Time.deltaTime
+        );
+
+        transform.localScale =
+            escalaOriginal * buff.Tamanho;
     }
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        int enemyLayer = LayerMask.NameToLayer("Enemy");
+        int enemyLayer =
+            LayerMask.NameToLayer("Enemy");
 
         if (other.gameObject.layer != enemyLayer)
             return;
 
-        IDamageable inimigo = other.GetComponent<IDamageable>();
+        IDamageable inimigo =
+            other.GetComponent<IDamageable>();
 
         if (inimigo != null)
-            inimigo.TakeDamage(danoPorSegundo * Time.deltaTime);
-
-        RandomEventManager evento = FindFirstObjectByType<RandomEventManager>();
-
-        if (evento != null)
         {
-            evento.ReceberDanoCausado(danoPorSegundo);
+            inimigo.TakeDamage(
+                danoPorSegundo *
+                buff.Dano *
+                Time.deltaTime
+            );
         }
     }
 }

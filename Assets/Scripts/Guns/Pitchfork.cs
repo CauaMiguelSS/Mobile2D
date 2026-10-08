@@ -22,7 +22,7 @@ public class Pitchfork : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void Launch(Vector2 newDirection)
+    public void Launch(Vector2 newDirection, WeaponBuff buff)
     {
         direction = newDirection.normalized;
 
@@ -30,6 +30,11 @@ public class Pitchfork : MonoBehaviour
         {
             direction = Vector2.right;
         }
+
+        speed *= buff.Velocidade;
+        damagePerSecond *= buff.Dano;
+
+        transform.localScale *= buff.Tamanho;
 
         rb.linearVelocity = direction * speed;
 
@@ -48,10 +53,10 @@ public class Pitchfork : MonoBehaviour
     {
         Vector2 pontoMaisProximo = parede.ClosestPoint(transform.position);
 
-        Vector2 normal =
-            ((Vector2)transform.position - pontoMaisProximo).normalized;
+        Vector2 normal = ((Vector2)transform.position - pontoMaisProximo).normalized;
 
-        direction = Vector2.Reflect(direction, normal);
+        direction =
+            Vector2.Reflect(direction, normal);
 
         float sinal = Random.value > 0.5f ? 1f : -1f;
 
@@ -77,13 +82,6 @@ public class Pitchfork : MonoBehaviour
         if (enemy != null)
         {
             enemy.TakeDamage(damagePerSecond * Time.deltaTime);
-        }
-
-        RandomEventManager evento = FindFirstObjectByType<RandomEventManager>();
-
-        if (evento != null)
-        {
-            evento.ReceberDanoCausado(damagePerSecond);
         }
     }
 

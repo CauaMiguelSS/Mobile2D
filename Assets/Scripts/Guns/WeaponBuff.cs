@@ -1,32 +1,55 @@
 using UnityEngine;
 
+public enum TipoBuff
+{
+    Dano,
+    Velocidade,
+    Tamanho,
+    Intervalo
+}
+
 public class WeaponBuff : MonoBehaviour
 {
-    public float danoMultiplier = 1f;
-    public float velocidadeMultiplier = 1f;
-    public float tamanhoMultiplier = 1f;
-    public float intervaloMultiplier = 1f;
+    [Header("Informações")]
+    [SerializeField] private string nomeArma = "Arma";
 
-    public void AplicarBuff(string tipo, float porcentagem)
+    [Header("Configurações")]
+    [SerializeField] private bool possuiIntervalo = false;
+
+    private float danoMultiplier = 1f;
+    private float velocidadeMultiplier = 1f;
+    private float tamanhoMultiplier = 1f;
+    private float intervaloMultiplier = 1f;
+
+    public string NomeArma => nomeArma;
+
+    public float Dano => danoMultiplier;
+    public float Velocidade => velocidadeMultiplier;
+    public float Tamanho => tamanhoMultiplier;
+    public float Intervalo => intervaloMultiplier;
+
+    public bool PossuiIntervalo => possuiIntervalo;
+
+    public void AplicarBuff(TipoBuff tipo, float porcentagem)
     {
         float multiplicador = 1f + porcentagem;
 
         switch (tipo)
         {
-            case "Dano":
+            case TipoBuff.Dano:
                 danoMultiplier *= multiplicador;
                 break;
 
-            case "Velocidade":
+            case TipoBuff.Velocidade:
                 velocidadeMultiplier *= multiplicador;
                 break;
 
-            case "Tamanho":
+            case TipoBuff.Tamanho:
                 tamanhoMultiplier *= multiplicador;
                 break;
 
-            case "Intervalo":
-                intervaloMultiplier /= multiplicador;
+            case TipoBuff.Intervalo:
+                intervaloMultiplier *= multiplicador;
                 break;
         }
     }

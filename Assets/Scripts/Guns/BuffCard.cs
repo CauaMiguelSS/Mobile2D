@@ -1,45 +1,61 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class BuffCard : MonoBehaviour
 {
     [SerializeField] private TMP_Text texto;
+    [SerializeField] private Button botao;
 
-    private WeaponBuff weaponBuff;
-    private string tipo;
-    private float porcentagem;
+    private WeaponBuff arma;
+    private TipoBuff tipo;
+    private int porcentagem;
 
     public void Configurar(
-        WeaponBuff arma,
-        string tipoBuff,
-        float valor
-    )
+        WeaponBuff novaArma,
+        TipoBuff novoTipo,
+        int novaPorcentagem)
     {
-        weaponBuff = arma;
-        tipo = tipoBuff;
-        porcentagem = valor;
+        arma = novaArma;
+        tipo = novoTipo;
+        porcentagem = novaPorcentagem;
 
         texto.text =
-            arma.gameObject.name +
+            arma.NomeArma +
             "\n" +
-            tipoBuff +
-            " +" +
-            (valor * 100f).ToString("0") +
-            "%";
+            CriarDescricao();
+
+        botao.onClick.RemoveAllListeners();
+
+        botao.onClick.AddListener(Escolher);
     }
 
-    public void Escolher()
+    private string CriarDescricao()
     {
-        weaponBuff.AplicarBuff(
+        switch (tipo)
+        {
+            case TipoBuff.Dano:
+                return "Dano +" + porcentagem + "%";
+
+            case TipoBuff.Velocidade:
+                return "Velocidade +" + porcentagem + "%";
+
+            case TipoBuff.Tamanho:
+                return "Tamanho +" + porcentagem + "%";
+
+            case TipoBuff.Intervalo:
+                return "Velocidade de tiro +" + porcentagem + "%";
+        }
+
+        return "";
+    }
+
+    private void Escolher()
+    {
+        RandomEventManager.Instance.EscolherBuff(
+            arma,
             tipo,
             porcentagem
         );
-
-        RandomEventManager evento =
-            FindFirstObjectByType<RandomEventManager>();
-
-        Time.timeScale = 1f;
-
-        evento.FecharEvento();
     }
 }

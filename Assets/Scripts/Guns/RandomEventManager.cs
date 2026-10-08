@@ -3,39 +3,59 @@ using UnityEngine.UI;
 
 public class RandomEventManager : MonoBehaviour
 {
+    public static RandomEventManager Instance { get; private set; }
+
     [Header("Barra")]
     [SerializeField] private Slider barra;
 
-    [Header("Evento")]
-    [SerializeField] private float danoNecessario = 100f;
-    [SerializeField] private float aumentoDanoNecessario = 50f;
+    [Header("Dano necessário")]
+    [SerializeField] private float danoNecessario = 1000f;
+    [SerializeField] private float aumentoPorEvento = 1.25f;
 
     [Header("Painel")]
     [SerializeField] private GameObject painel;
 
+    [Header("Cartas")]
     [SerializeField] private BuffCard[] cartas;
 
     private float danoAtual;
+    private bool eventoAberto;
 
-    public void ReceberDanoCausado(float dano)
+    private void Awake()
     {
+        Instance = this;
+
+        if (painel != null)
+            painel.SetActive(false);
+
+        if (barra != null)
+            barra.value = 0f;
+    }
+
+    public void RegistrarDano(float dano)
+    {
+        if (eventoAberto)
+            return;
+
         danoAtual += dano;
 
-        barra.value = danoAtual / danoNecessario;
+        if (barra != null)
+            barra.value = danoAtual / danoNecessario;
 
         if (danoAtual >= danoNecessario)
-        {
             AtivarEvento();
-        }
     }
 
     private void AtivarEvento()
     {
+        eventoAberto = true;
+
         danoAtual = 0f;
 
-        danoNecessario += aumentoDanoNecessario;
+        danoNecessario *= aumentoPorEvento;
 
-        barra.value = 0f;
+        if (barra != null)
+            barra.value = 0f;
 
         GerarCartas();
 
@@ -52,48 +72,85 @@ public class RandomEventManager : MonoBehaviour
                 FindObjectsSortMode.None
             );
 
-        System.Collections.Generic.List<WeaponBuff> desbloqueadas =
-            new System.Collections.Generic.List<WeaponBuff>();
+        int cartaAtual = 0;
 
         foreach (WeaponBuff arma in armas)
         {
-            if (arma.gameObject.activeSelf)
+            if (!arma.gameObject.activeSelf)
+                continue;
+
+            while (cartaAtual < cartas.Length)
             {
-                desbloqueadas.Add(arma);
+                TipoBuff tipo = SortearBuff(arma);
+
+                int porcentagem = Random.Range(20, 101);
+
+                cartas[cartaAtual].Configurar(
+                    arma,
+                    tipo,
+                    porcentagem
+                );
+
+                cartaAtual++;
+                break;
             }
+
+            if (cartaAtual >= cartas.Length)
+                break;
         }
 
-        foreach (BuffCard carta in cartas)
+        while (cartaAtual < cartas.Length)
         {
-            WeaponBuff arma =
-                desbloqueadas[
-                    Random.Range(0, desbloqueadas.Count)
-                ];
+            WeaponBuff arma = EncontrarArmaDesbloqueada(armas);
 
-            string[] tipos =
-            {
-            "Dano",
-            "Velocidade",
-            "Tamanho",
-            "Intervalo"
-        };
+            TipoBuff tipo = SortearBuff(arma);
 
-            string tipo =
-                tipos[Random.Range(0, tipos.Length)];
+            int porcentagem = Random.Range(20, 101);
 
-            float porcentagem =
-                Random.Range(20, 101) / 100f;
-
-            carta.Configurar(
+            cartas[cartaAtual].Configurar(
                 arma,
                 tipo,
                 porcentagem
             );
+
+            cartaAtual++;
+        }
+    }
+
+    private WeaponBuff EncontrarArmaDesbloqueada(WeaponBuff[] armas)
+    {
+        foreach (WeaponBuff arma in armas)
+        {
+            if (arma.gameObject.activeSelf)
+                return arma;
         }
 
+        return null;
     }
-    public void FecharEvento()
+
+    private TipoBuff SortearBuff(WeaponBuff arma)
     {
+        int quantidade = arma.PossuiIntervalo ? 4 : 3;
+
+        int sorteio = Random.Range(0, quantidade);
+
+        return (TipoBuff)sorteio;
+    }
+
+    public void EscolherBuff(
+        WeaponBuff arma,
+        TipoBuff tipo,
+        int porcentagem)
+    {
+        arma.AplicarBuff(
+            tipo,
+            porcentagem / 100f
+        );
+
         painel.SetActive(false);
+
+        eventoAberto = false;
+
+        Time.timeScale = 1f;
     }
 }

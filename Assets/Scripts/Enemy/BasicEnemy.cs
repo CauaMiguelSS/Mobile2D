@@ -56,14 +56,13 @@ public class BasicEnemy : MonoBehaviour, IDamageable
         vidaAtual -= damage;
 
         if (barraVida != null)
-        {
             barraVida.value = vidaAtual / vidaMaxima;
-        }
+
+        if (RandomEventManager.Instance != null)
+            RandomEventManager.Instance.RegistrarDano(damage);
 
         if (vidaAtual <= 0)
-        {
             Morrer();
-        }
     }
 
     private void Morrer()

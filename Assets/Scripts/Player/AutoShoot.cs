@@ -6,8 +6,7 @@ public class AutoShoot : MonoBehaviour
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform pontoDeTiro;
     [SerializeField] private AimingOrbit aimingOrbit;
-
-    private WeaponBuff buff;
+    [SerializeField] private WeaponBuff buff;
 
     [Header("Configurações")]
     [SerializeField] private float intervaloTiro = 0.5f;
@@ -16,14 +15,30 @@ public class AutoShoot : MonoBehaviour
 
     private void Start()
     {
-        buff = GetComponent<WeaponBuff>();
+        if (buff == null)
+        {
+            buff = GetComponent<WeaponBuff>();
+        }
+
+        if (buff == null)
+        {
+            Debug.LogError(
+                "WeaponBuff não foi encontrado no Bullet!"
+            );
+        }
     }
 
     private void Update()
     {
+        if (buff == null)
+            return;
+
         contador += Time.deltaTime;
 
-        if (contador >= intervaloTiro)
+        float intervaloAtual =
+            intervaloTiro / buff.Intervalo;
+
+        if (contador >= intervaloAtual)
         {
             Atirar();
             contador = 0f;
@@ -32,13 +47,36 @@ public class AutoShoot : MonoBehaviour
 
     private void Atirar()
     {
-        GameObject projetil = Instantiate(projectilePrefab, pontoDeTiro.position, Quaternion.identity);
-
-        projetil.GetComponent<Projectile>().SetDirection(aimingOrbit.Direcao);
-
-        if (buff != null)
+        if (projectilePrefab == null)
         {
-            projetil.GetComponent<Projectile>().AplicarBuff(buff);
+            Debug.LogError(
+                "Projectile Prefab não foi configurado!"
+            );
+            return;
         }
+
+        GameObject projetil = Instantiate(
+            projectilePrefab,
+            pontoDeTiro.position,
+            Quaternion.identity
+        );
+
+        Projectile script =
+            projetil.GetComponent<Projectile>();
+
+        if (script == null)
+        {
+            Debug.LogError(
+                "O prefab do Projectile não possui o script Projectile!"
+            );
+
+            return;
+        }
+
+        script.SetDirection(
+            aimingOrbit.Direcao
+        );
+
+        script.AplicarBuff(buff);
     }
 }

@@ -13,8 +13,11 @@ public class Projectile : MonoBehaviour
     {
         direcao = novaDirecao.normalized;
 
-        float angulo = Mathf.Atan2(direcao.y, direcao.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0f, 0f, angulo);
+        float angulo =
+            Mathf.Atan2(direcao.y, direcao.x) * Mathf.Rad2Deg;
+
+        transform.rotation =
+            Quaternion.Euler(0f, 0f, angulo);
     }
 
     private void Start()
@@ -24,15 +27,16 @@ public class Projectile : MonoBehaviour
 
     public void AplicarBuff(WeaponBuff buff)
     {
-        dano *= buff.danoMultiplier;
-        velocidade *= buff.velocidadeMultiplier;
+        dano *= buff.Dano;
+        velocidade *= buff.Velocidade;
 
-        transform.localScale *= buff.tamanhoMultiplier;
+        transform.localScale *= buff.Tamanho;
     }
 
     private void Update()
     {
-        transform.position += (Vector3)(direcao * velocidade * Time.deltaTime);
+        transform.position +=
+            (Vector3)(direcao * velocidade * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -42,18 +46,12 @@ public class Projectile : MonoBehaviour
         if (other.gameObject.layer != enemyLayer)
             return;
 
-        IDamageable damageable = other.GetComponent<IDamageable>();
+        IDamageable damageable =
+            other.GetComponent<IDamageable>();
 
         if (damageable != null)
         {
             damageable.TakeDamage(dano);
-        }
-
-        RandomEventManager evento = FindFirstObjectByType<RandomEventManager>();
-
-        if (evento != null)
-        {
-            evento.ReceberDanoCausado(dano);
         }
 
         Destroy(gameObject);

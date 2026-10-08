@@ -30,9 +30,14 @@ public class Scythe : MonoBehaviour
     {
         if (!parada)
         {
-            transform.position += (Vector3)(direcao * velocidade * Time.deltaTime);
+            transform.position +=
+                (Vector3)(direcao * velocidade * Time.deltaTime);
 
-            float distanciaPercorrida = Vector3.Distance(posicaoInicial, transform.position);
+            float distanciaPercorrida =
+                Vector3.Distance(
+                    posicaoInicial,
+                    transform.position
+                );
 
             if (distanciaPercorrida >= distanciaMaxima)
             {
@@ -40,7 +45,11 @@ public class Scythe : MonoBehaviour
             }
         }
 
-        transform.Rotate(0f, 0f, velocidadeRotacao * Time.deltaTime);
+        transform.Rotate(
+            0f,
+            0f,
+            velocidadeRotacao * Time.deltaTime
+        );
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -60,18 +69,22 @@ public class Scythe : MonoBehaviour
         if (other.gameObject.layer != enemyLayer)
             return;
 
-        IDamageable inimigo = other.GetComponent<IDamageable>();
+        IDamageable inimigo =
+            other.GetComponent<IDamageable>();
 
         if (inimigo != null)
         {
-            inimigo.TakeDamage(dano * Time.deltaTime);
+            inimigo.TakeDamage(
+                dano * Time.deltaTime
+            );
         }
+    }
 
-        RandomEventManager evento = FindFirstObjectByType<RandomEventManager>();
+    public void AplicarBuff(WeaponBuff buff)
+    {
+        dano *= buff.Dano;
+        velocidade *= buff.Velocidade;
 
-        if (evento != null)
-        {
-            evento.ReceberDanoCausado(dano);
-        }
+        transform.localScale *= buff.Tamanho;
     }
 }
