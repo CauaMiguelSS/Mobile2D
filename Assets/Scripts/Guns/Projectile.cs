@@ -30,7 +30,10 @@ public class Projectile : MonoBehaviour
         dano *= buff.Dano;
         velocidade *= buff.Velocidade;
 
-        transform.localScale *= buff.Tamanho;
+        if (buff.Tamanho > 1f)
+        {
+            transform.localScale *= buff.Tamanho;
+        }
     }
 
     private void Update()

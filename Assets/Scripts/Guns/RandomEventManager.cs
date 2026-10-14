@@ -64,68 +64,52 @@ public class RandomEventManager : MonoBehaviour
         painel.SetActive(true);
     }
 
+
     private void GerarCartas()
     {
-        WeaponBuff[] armas =
+        WeaponBuff[] todasAsArmas =
             FindObjectsByType<WeaponBuff>(
                 FindObjectsInactive.Include,
                 FindObjectsSortMode.None
             );
 
-        int cartaAtual = 0;
+        System.Collections.Generic.List<WeaponBuff> armasDisponiveis =
+            new System.Collections.Generic.List<WeaponBuff>();
 
-        foreach (WeaponBuff arma in armas)
+        foreach (WeaponBuff arma in todasAsArmas)
         {
-            if (!arma.gameObject.activeSelf)
+            if (arma == null)
                 continue;
 
-            while (cartaAtual < cartas.Length)
-            {
-                TipoBuff tipo = SortearBuff(arma);
+            if (!arma.gameObject.activeInHierarchy)
+                continue;
 
-                int porcentagem = Random.Range(20, 101);
-
-                cartas[cartaAtual].Configurar(
-                    arma,
-                    tipo,
-                    porcentagem
-                );
-
-                cartaAtual++;
-                break;
-            }
-
-            if (cartaAtual >= cartas.Length)
-                break;
+            armasDisponiveis.Add(arma);
         }
 
-        while (cartaAtual < cartas.Length)
+        if (armasDisponiveis.Count == 0)
         {
-            WeaponBuff arma = EncontrarArmaDesbloqueada(armas);
+            Debug.LogError("RandomEventManager: nenhuma arma desbloqueada com WeaponBuff!");
+            return;
+        }
+
+        for (int i = 0; i < cartas.Length; i++)
+        {
+            WeaponBuff arma = armasDisponiveis[
+                Random.Range(0, armasDisponiveis.Count)
+            ];
 
             TipoBuff tipo = SortearBuff(arma);
-
             int porcentagem = Random.Range(20, 101);
 
-            cartas[cartaAtual].Configurar(
-                arma,
-                tipo,
-                porcentagem
+            cartas[i].Configurar(arma, tipo, porcentagem);
+
+            Debug.Log(
+                $"Carta {i + 1}: {arma.NomeArma} | " +
+                $"Objeto: {arma.gameObject.name} | " +
+                $"Buff: {tipo} +{porcentagem}%"
             );
-
-            cartaAtual++;
         }
-    }
-
-    private WeaponBuff EncontrarArmaDesbloqueada(WeaponBuff[] armas)
-    {
-        foreach (WeaponBuff arma in armas)
-        {
-            if (arma.gameObject.activeSelf)
-                return arma;
-        }
-
-        return null;
     }
 
     private TipoBuff SortearBuff(WeaponBuff arma)
@@ -142,15 +126,16 @@ public class RandomEventManager : MonoBehaviour
         TipoBuff tipo,
         int porcentagem)
     {
-        arma.AplicarBuff(
-            tipo,
-            porcentagem / 100f
-        );
+        if (arma == null)
+        {
+            Debug.LogError("A arma selecionada não possui WeaponBuff!");
+            return;
+        }
+
+        arma.AplicarBuff(tipo, porcentagem / 100f);
 
         painel.SetActive(false);
-
         eventoAberto = false;
-
         Time.timeScale = 1f;
     }
 }

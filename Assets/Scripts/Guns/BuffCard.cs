@@ -4,6 +4,7 @@ using TMPro;
 
 public class BuffCard : MonoBehaviour
 {
+    [Header("Referências")]
     [SerializeField] private TMP_Text texto;
     [SerializeField] private Button botao;
 
@@ -20,10 +21,36 @@ public class BuffCard : MonoBehaviour
         tipo = novoTipo;
         porcentagem = novaPorcentagem;
 
-        texto.text =
-            arma.NomeArma +
-            "\n" +
-            CriarDescricao();
+        if (texto == null)
+        {
+            Debug.LogError(
+                "BuffCard: o campo Texto não foi configurado em " +
+                gameObject.name
+            );
+
+            return;
+        }
+
+        if (botao == null)
+        {
+            Debug.LogError(
+                "BuffCard: o campo Botão não foi configurado em " +
+                gameObject.name
+            );
+
+            return;
+        }
+
+        if (arma == null)
+        {
+            Debug.LogError(
+                "BuffCard: nenhuma WeaponBuff foi encontrada!"
+            );
+
+            return;
+        }
+
+        texto.text = arma.NomeArma + "\n" + CriarDescricao();
 
         botao.onClick.RemoveAllListeners();
 
@@ -52,10 +79,6 @@ public class BuffCard : MonoBehaviour
 
     private void Escolher()
     {
-        RandomEventManager.Instance.EscolherBuff(
-            arma,
-            tipo,
-            porcentagem
-        );
+        RandomEventManager.Instance.EscolherBuff(arma, tipo, porcentagem);
     }
 }

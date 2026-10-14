@@ -12,9 +12,7 @@ public class WeaponBuff : MonoBehaviour
 {
     [Header("Informações")]
     [SerializeField] private string nomeArma = "Arma";
-
-    [Header("Configurações")]
-    [SerializeField] private bool possuiIntervalo = false;
+    [SerializeField] private bool possuiIntervalo;
 
     private float danoMultiplier = 1f;
     private float velocidadeMultiplier = 1f;
@@ -22,12 +20,10 @@ public class WeaponBuff : MonoBehaviour
     private float intervaloMultiplier = 1f;
 
     public string NomeArma => nomeArma;
-
     public float Dano => danoMultiplier;
     public float Velocidade => velocidadeMultiplier;
     public float Tamanho => tamanhoMultiplier;
     public float Intervalo => intervaloMultiplier;
-
     public bool PossuiIntervalo => possuiIntervalo;
 
     public void AplicarBuff(TipoBuff tipo, float porcentagem)
@@ -52,5 +48,13 @@ public class WeaponBuff : MonoBehaviour
                 intervaloMultiplier *= multiplicador;
                 break;
         }
+
+        Debug.Log(
+            $"Arma: {nomeArma} | " +
+            $"Dano: {danoMultiplier:F2} | " +
+            $"Velocidade: {velocidadeMultiplier:F2} | " +
+            $"Tamanho: {tamanhoMultiplier:F2} | " +
+            $"Intervalo: {intervaloMultiplier:F2}"
+        );
     }
 }

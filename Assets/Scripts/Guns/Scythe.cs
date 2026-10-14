@@ -30,8 +30,7 @@ public class Scythe : MonoBehaviour
     {
         if (!parada)
         {
-            transform.position +=
-                (Vector3)(direcao * velocidade * Time.deltaTime);
+            transform.position += (Vector3)(direcao * velocidade * Time.deltaTime);
 
             float distanciaPercorrida =
                 Vector3.Distance(
@@ -69,22 +68,24 @@ public class Scythe : MonoBehaviour
         if (other.gameObject.layer != enemyLayer)
             return;
 
-        IDamageable inimigo =
-            other.GetComponent<IDamageable>();
+        IDamageable inimigo = other.GetComponent<IDamageable>();
 
         if (inimigo != null)
         {
-            inimigo.TakeDamage(
-                dano * Time.deltaTime
-            );
+            inimigo.TakeDamage(dano * Time.deltaTime);
         }
     }
 
     public void AplicarBuff(WeaponBuff buff)
     {
+        if (buff == null)
+        {
+            Debug.LogError("Scythe: WeaponBuff não foi recebido!", gameObject);
+            return;
+        }
+
         dano *= buff.Dano;
         velocidade *= buff.Velocidade;
-
         transform.localScale *= buff.Tamanho;
     }
 }

@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class Shovel : MonoBehaviour
@@ -12,62 +13,57 @@ public class Shovel : MonoBehaviour
 
     private WeaponBuff buff;
     private Vector3 escalaOriginal;
-
     private float angulo;
 
     private void Start()
     {
         buff = GetComponent<WeaponBuff>();
 
+        if (buff == null)
+        {
+            Debug.LogError("Shovel: WeaponBuff não encontrado!", gameObject);
+            enabled = false;
+            return;
+        }
+
+        if (player == null)
+        {
+            Debug.LogError("Shovel: Player não foi configurado!", gameObject);
+            enabled = false;
+            return;
+        }
+
         escalaOriginal = transform.localScale;
     }
 
     private void Update()
     {
-        angulo +=
-            velocidadeOrbita *
-            buff.Velocidade *
-            Time.deltaTime;
+        angulo += velocidadeOrbita * buff.Velocidade * Time.deltaTime;
 
-        float x =
-            Mathf.Cos(angulo * Mathf.Deg2Rad) *
-            distancia;
+        float x = Mathf.Cos(angulo * Mathf.Deg2Rad) * distancia;
+        float y = Mathf.Sin(angulo * Mathf.Deg2Rad) * distancia;
 
-        float y =
-            Mathf.Sin(angulo * Mathf.Deg2Rad) *
-            distancia;
-
-        transform.position =
-            player.position +
-            new Vector3(x, y, 0f);
+        transform.position = player.position + new Vector3(x, y, 0f);
 
         transform.Rotate(
-            0f,
-            0f,
-            velocidadeOrbita * Time.deltaTime
+            0f, 0f,
+            velocidadeOrbita * buff.Velocidade * Time.deltaTime
         );
 
-        transform.localScale =
-            escalaOriginal * buff.Tamanho;
+        transform.localScale = escalaOriginal * buff.Tamanho;
     }
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        int enemyLayer =
-            LayerMask.NameToLayer("Enemy");
-
-        if (other.gameObject.layer != enemyLayer)
+        if (other.gameObject.layer != LayerMask.NameToLayer("Enemy"))
             return;
 
-        IDamageable inimigo =
-            other.GetComponent<IDamageable>();
+        IDamageable inimigo = other.GetComponent<IDamageable>();
 
         if (inimigo != null)
         {
             inimigo.TakeDamage(
-                danoPorSegundo *
-                buff.Dano *
-                Time.deltaTime
+                danoPorSegundo * buff.Dano * Time.deltaTime
             );
         }
     }
