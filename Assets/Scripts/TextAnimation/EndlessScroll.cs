@@ -1,60 +1,50 @@
+
 using UnityEngine;
 
 public class EndlessScroll : MonoBehaviour
 {
-    [Header("Objetos")]
-    [SerializeField] private RectTransform[] objetos;
+    [Header("Cenarios")]
+    [SerializeField] private Transform cenarioA;
+    [SerializeField] private Transform cenarioB;
 
     [Header("Movimento")]
-    [SerializeField] private float velocidade = 100f;
-    [SerializeField] private Vector2 direcao = Vector2.left;
+    [SerializeField] private float velocidade = 3f;
 
-    [Header("Loop")]
-    [SerializeField] private float distancia = 1920f;
+    [Header("Reset")]
+    [SerializeField] private float distanciaParaResetar = 20f;
+
+    private float distanciaA;
+    private float distanciaB;
+
+    private Vector3 posicaoInicialA;
+    private Vector3 posicaoInicialB;
+
+    private void Start()
+    {
+        posicaoInicialA = cenarioA.position;
+        posicaoInicialB = cenarioB.position;
+    }
 
     private void Update()
     {
-        Vector2 movimento =
-            direcao.normalized *
-            velocidade *
-            Time.unscaledDeltaTime;
+        float movimento = velocidade * Time.deltaTime;
 
-        foreach (RectTransform objeto in objetos)
+        cenarioA.position += Vector3.up * movimento;
+        cenarioB.position += Vector3.up * movimento;
+
+        distanciaA += movimento;
+        distanciaB += movimento;
+
+        if (distanciaA >= distanciaParaResetar)
         {
-            objeto.anchoredPosition += movimento;
+            cenarioA.position = posicaoInicialA;
+            distanciaA = 0f;
         }
 
-        VerificarLoop();
-    }
-
-    private void VerificarLoop()
-    {
-        for (int i = 0; i < objetos.Length; i++)
+        if (distanciaB >= distanciaParaResetar)
         {
-            float distanciaMovida =
-                Vector2.Dot(
-                    objetos[i].anchoredPosition,
-                    -direcao.normalized
-                );
-
-            if (distanciaMovida >= distancia)
-            {
-                RectTransform ultimo = objetos[0];
-
-                for (int j = 1; j < objetos.Length; j++)
-                {
-                    if (Vector2.Dot(
-                        objetos[j].anchoredPosition - objetos[i].anchoredPosition,
-                        -direcao.normalized) < 0)
-                    {
-                        ultimo = objetos[j];
-                    }
-                }
-
-                objetos[i].anchoredPosition =
-                    ultimo.anchoredPosition -
-                    direcao.normalized * distancia;
-            }
+            cenarioB.position = posicaoInicialB;
+            distanciaB = 0f;
         }
     }
 }
