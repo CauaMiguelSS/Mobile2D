@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -11,50 +12,54 @@ public class BuffCard : MonoBehaviour
     private WeaponBuff arma;
     private TipoBuff tipo;
     private int porcentagem;
+    private bool configurada;
+
+    public bool EstaConfigurada =>
+        configurada && arma != null;
+
+    private void Awake()
+    {
+        if (botao == null)
+            botao = GetComponent<Button>();
+
+        if (botao != null)
+        {
+            botao.onClick.RemoveListener(Escolher);
+            botao.onClick.AddListener(Escolher);
+        }
+    }
 
     public void Configurar(
         WeaponBuff novaArma,
         TipoBuff novoTipo,
         int novaPorcentagem)
     {
+        if (novaArma == null || texto == null || botao == null)
+        {
+            Limpar();
+            return;
+        }
+
         arma = novaArma;
         tipo = novoTipo;
         porcentagem = novaPorcentagem;
+        configurada = true;
 
-        if (texto == null)
-        {
-            Debug.LogError(
-                "BuffCard: o campo Texto não foi configurado em " +
-                gameObject.name
-            );
+        texto.text = $"{arma.NomeArma}\n{CriarDescricao()}";
+        botao.interactable = true;
+    }
 
-            return;
-        }
+    public void Limpar()
+    {
+        configurada = false;
+        arma = null;
+        porcentagem = 0;
 
-        if (botao == null)
-        {
-            Debug.LogError(
-                "BuffCard: o campo Botão não foi configurado em " +
-                gameObject.name
-            );
+        if (texto != null)
+            texto.text = "";
 
-            return;
-        }
-
-        if (arma == null)
-        {
-            Debug.LogError(
-                "BuffCard: nenhuma WeaponBuff foi encontrada!"
-            );
-
-            return;
-        }
-
-        texto.text = arma.NomeArma + "\n" + CriarDescricao();
-
-        botao.onClick.RemoveAllListeners();
-
-        botao.onClick.AddListener(Escolher);
+        if (botao != null)
+            botao.interactable = false;
     }
 
     private string CriarDescricao()
@@ -62,23 +67,40 @@ public class BuffCard : MonoBehaviour
         switch (tipo)
         {
             case TipoBuff.Dano:
-                return "Dano +" + porcentagem + "%";
+                return $"Dano +{porcentagem}%";
 
             case TipoBuff.Velocidade:
-                return "Velocidade +" + porcentagem + "%";
+                return $"Velocidade +{porcentagem}%";
 
             case TipoBuff.Tamanho:
-                return "Tamanho +" + porcentagem + "%";
+                return $"Tamanho +{porcentagem}%";
 
             case TipoBuff.Intervalo:
-                return "Velocidade de tiro +" + porcentagem + "%";
-        }
+                return $"Intervalo de tiro +{porcentagem}%";
 
-        return "";
+            default:
+                return "";
+        }
     }
 
     private void Escolher()
     {
-        RandomEventManager.Instance.EscolherBuff(arma, tipo, porcentagem);
+        if (!EstaConfigurada)
+            return;
+
+        if (RandomEventManager.Instance == null)
+            return;
+
+        RandomEventManager.Instance.EscolherBuff(
+            arma,
+            tipo,
+            porcentagem
+        );
+    }
+
+    private void OnDestroy()
+    {
+        if (botao != null)
+            botao.onClick.RemoveListener(Escolher);
     }
 }

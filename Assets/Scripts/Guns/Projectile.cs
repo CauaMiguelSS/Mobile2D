@@ -1,10 +1,10 @@
+
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
     [Header("Configurações")]
     [SerializeField] private float velocidade = 10f;
-    [SerializeField] private float tempoDeVida = 3f;
     [SerializeField] private float dano = 10f;
 
     private Vector2 direcao;
@@ -13,27 +13,25 @@ public class Projectile : MonoBehaviour
     {
         direcao = novaDirecao.normalized;
 
-        float angulo =
-            Mathf.Atan2(direcao.y, direcao.x) * Mathf.Rad2Deg;
+        if (direcao.sqrMagnitude <= 0f)
+            return;
 
-        transform.rotation =
-            Quaternion.Euler(0f, 0f, angulo);
-    }
+        float angulo = Mathf.Atan2(
+            direcao.y,
+            direcao.x
+        ) * Mathf.Rad2Deg;
 
-    private void Start()
-    {
-        Destroy(gameObject, tempoDeVida);
+        transform.rotation = Quaternion.Euler(0f, 0f, angulo);
     }
 
     public void AplicarBuff(WeaponBuff buff)
     {
+        if (buff == null)
+            return;
+
         dano *= buff.Dano;
         velocidade *= buff.Velocidade;
-
-        if (buff.Tamanho > 1f)
-        {
-            transform.localScale *= buff.Tamanho;
-        }
+        transform.localScale *= buff.Tamanho;
     }
 
     private void Update()
@@ -44,18 +42,19 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        int enemyLayer = LayerMask.NameToLayer("Enemy");
+        if (other.CompareTag("Limite"))
+        {
+            Destroy(gameObject);
+            return;
+        }
 
-        if (other.gameObject.layer != enemyLayer)
+        if (!other.CompareTag("Enemy"))
             return;
 
-        IDamageable damageable =
-            other.GetComponent<IDamageable>();
+        IDamageable alvo = other.GetComponent<IDamageable>();
 
-        if (damageable != null)
-        {
-            damageable.TakeDamage(dano);
-        }
+        if (alvo != null)
+            alvo.TakeDamage(dano);
 
         Destroy(gameObject);
     }

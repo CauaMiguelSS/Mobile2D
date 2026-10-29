@@ -74,6 +74,11 @@ public class BossEnemy : MonoBehaviour, IDamageable
             killManager.InimigoMorreu(transform.position, valorInimigo);
         }
 
+        if (SpawnIntervalManager.Instance != null)
+        {
+            SpawnIntervalManager.Instance.RegistrarMorte();
+        }
+
         Destroy(gameObject);
     }
 

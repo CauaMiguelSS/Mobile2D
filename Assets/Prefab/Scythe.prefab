@@ -144,8 +144,8 @@ MonoBehaviour:
   velocidade: 8
   distanciaMaxima: 5
   tempoVida: 5
-  velocidadeRotacao: 500
-  dano: 500
+  velocidadeRotacao: 600
+  dano: 100
 --- !u!114 &7593507996567709764
 MonoBehaviour:
   m_ObjectHideFlags: 0

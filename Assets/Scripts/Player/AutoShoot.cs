@@ -1,82 +1,74 @@
+
+using System;
 using UnityEngine;
 
 public class AutoShoot : MonoBehaviour
 {
-    [Header("Referências")]
-    [SerializeField] private GameObject projectilePrefab;
-    [SerializeField] private Transform pontoDeTiro;
-    [SerializeField] private AimingOrbit aimingOrbit;
-    [SerializeField] private WeaponBuff buff;
-
-    [Header("Configurações")]
-    [SerializeField] private float intervaloTiro = 0.5f;
-
-    private float contador;
-
-    private void Start()
+    [Serializable]
+    private class ConfiguracaoArma
     {
-        if (buff == null)
-        {
-            buff = GetComponent<WeaponBuff>();
-        }
+        public WeaponBuff buff;
+        public GameObject projectilePrefab;
+        public Transform pontoDeTiro;
+        public AimingOrbit aimingOrbit;
 
-        if (buff == null)
-        {
-            Debug.LogError(
-                "WeaponBuff não foi encontrado no Bullet!"
-            );
-        }
+        [Min(0.01f)]
+        public float intervaloTiro = 0.5f;
+
+        [NonSerialized] public float contador;
     }
+
+    [Header("Armas")]
+    [SerializeField] private ConfiguracaoArma[] armas;
 
     private void Update()
     {
-        if (buff == null)
+        if (armas == null)
             return;
 
-        contador += Time.deltaTime;
-
-        float intervaloAtual =
-            intervaloTiro / buff.Intervalo;
-
-        if (contador >= intervaloAtual)
+        foreach (ConfiguracaoArma arma in armas)
         {
-            Atirar();
-            contador = 0f;
+            if (arma == null || arma.buff == null)
+                continue;
+
+            if (!arma.buff.gameObject.activeInHierarchy)
+                continue;
+
+            if (arma.projectilePrefab == null ||
+                arma.pontoDeTiro == null ||
+                arma.aimingOrbit == null)
+                continue;
+
+            arma.contador += Time.deltaTime;
+
+            float intervaloAtual =
+                arma.intervaloTiro / arma.buff.Intervalo;
+
+            if (arma.contador >= intervaloAtual)
+            {
+                Atirar(arma);
+                arma.contador = 0f;
+            }
         }
     }
 
-    private void Atirar()
+    private void Atirar(ConfiguracaoArma arma)
     {
-        if (projectilePrefab == null)
-        {
-            Debug.LogError(
-                "Projectile Prefab não foi configurado!"
-            );
-            return;
-        }
-
         GameObject projetil = Instantiate(
-            projectilePrefab,
-            pontoDeTiro.position,
+            arma.projectilePrefab,
+            arma.pontoDeTiro.position,
             Quaternion.identity
         );
 
-        Projectile script =
-            projetil.GetComponent<Projectile>();
+        Projectile script = projetil.GetComponent<Projectile>();
 
         if (script == null)
         {
-            Debug.LogError(
-                "O prefab do Projectile não possui o script Projectile!"
-            );
-
+            Destroy(projetil);
             return;
         }
 
-        script.SetDirection(
-            aimingOrbit.Direcao
-        );
-
-        script.AplicarBuff(buff);
+        script.SetDirection(arma.aimingOrbit.Direcao);
+        script.AplicarBuff(arma.buff);
     }
 }

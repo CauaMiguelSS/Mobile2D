@@ -1,3 +1,5 @@
+
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,8 +10,11 @@ public class RandomEventManager : MonoBehaviour
     [Header("Barra")]
     [SerializeField] private Slider barra;
 
-    [Header("Dano necessário")]
+    [Header("Progressão")]
+    [Min(1f)]
     [SerializeField] private float danoNecessario = 1000f;
+
+    [Min(1f)]
     [SerializeField] private float aumentoPorEvento = 1.25f;
 
     [Header("Painel")]
@@ -23,6 +28,12 @@ public class RandomEventManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            enabled = false;
+            return;
+        }
+
         Instance = this;
 
         if (painel != null)
@@ -30,17 +41,37 @@ public class RandomEventManager : MonoBehaviour
 
         if (barra != null)
             barra.value = 0f;
+
+        LimparCartas();
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
+    }
+
+    private void LimparCartas()
+    {
+        if (cartas == null)
+            return;
+
+        foreach (BuffCard carta in cartas)
+        {
+            if (carta != null)
+                carta.Limpar();
+        }
     }
 
     public void RegistrarDano(float dano)
     {
-        if (eventoAberto)
+        if (eventoAberto || dano <= 0f)
             return;
 
         danoAtual += dano;
 
         if (barra != null)
-            barra.value = danoAtual / danoNecessario;
+            barra.value = Mathf.Clamp01(danoAtual / danoNecessario);
 
         if (danoAtual >= danoNecessario)
             AtivarEvento();
@@ -48,77 +79,69 @@ public class RandomEventManager : MonoBehaviour
 
     private void AtivarEvento()
     {
+        if (painel == null || !GerarCartas())
+            return;
+
         eventoAberto = true;
-
         danoAtual = 0f;
-
         danoNecessario *= aumentoPorEvento;
 
         if (barra != null)
             barra.value = 0f;
 
-        GerarCartas();
-
-        Time.timeScale = 0f;
-
         painel.SetActive(true);
+        Time.timeScale = 0f;
     }
 
-
-    private void GerarCartas()
+    private bool GerarCartas()
     {
-        WeaponBuff[] todasAsArmas =
+        LimparCartas();
+
+        if (cartas == null || cartas.Length == 0)
+            return false;
+
+        WeaponBuff[] encontradas =
             FindObjectsByType<WeaponBuff>(
-                FindObjectsInactive.Include,
+                FindObjectsInactive.Exclude,
                 FindObjectsSortMode.None
             );
 
-        System.Collections.Generic.List<WeaponBuff> armasDisponiveis =
-            new System.Collections.Generic.List<WeaponBuff>();
+        List<WeaponBuff> armasValidas = new List<WeaponBuff>();
 
-        foreach (WeaponBuff arma in todasAsArmas)
+        foreach (WeaponBuff arma in encontradas)
         {
-            if (arma == null)
+            if (arma == null || !arma.gameObject.activeInHierarchy)
                 continue;
 
-            if (!arma.gameObject.activeInHierarchy)
+            if (!armasValidas.Contains(arma))
+                armasValidas.Add(arma);
+        }
+
+        if (armasValidas.Count == 0)
+            return false;
+
+        int configuradas = 0;
+
+        foreach (BuffCard carta in cartas)
+        {
+            if (carta == null)
                 continue;
 
-            armasDisponiveis.Add(arma);
-        }
-
-        if (armasDisponiveis.Count == 0)
-        {
-            Debug.LogError("RandomEventManager: nenhuma arma desbloqueada com WeaponBuff!");
-            return;
-        }
-
-        for (int i = 0; i < cartas.Length; i++)
-        {
-            WeaponBuff arma = armasDisponiveis[
-                Random.Range(0, armasDisponiveis.Count)
+            WeaponBuff arma = armasValidas[
+                Random.Range(0, armasValidas.Count)
             ];
 
-            TipoBuff tipo = SortearBuff(arma);
-            int porcentagem = Random.Range(20, 101);
+            int quantidadeBuffs = arma.PossuiIntervalo ? 4 : 3;
+            TipoBuff tipo = (TipoBuff)Random.Range(0, quantidadeBuffs);
+            int porcentagem = Random.Range(10, 40);
 
-            cartas[i].Configurar(arma, tipo, porcentagem);
+            carta.Configurar(arma, tipo, porcentagem);
 
-            Debug.Log(
-                $"Carta {i + 1}: {arma.NomeArma} | " +
-                $"Objeto: {arma.gameObject.name} | " +
-                $"Buff: {tipo} +{porcentagem}%"
-            );
+            if (carta.EstaConfigurada)
+                configuradas++;
         }
-    }
 
-    private TipoBuff SortearBuff(WeaponBuff arma)
-    {
-        int quantidade = arma.PossuiIntervalo ? 4 : 3;
-
-        int sorteio = Random.Range(0, quantidade);
-
-        return (TipoBuff)sorteio;
+        return configuradas > 0;
     }
 
     public void EscolherBuff(
@@ -126,16 +149,19 @@ public class RandomEventManager : MonoBehaviour
         TipoBuff tipo,
         int porcentagem)
     {
-        if (arma == null)
-        {
-            Debug.LogError("A arma selecionada não possui WeaponBuff!");
+        if (!eventoAberto || arma == null)
             return;
-        }
+
+        if (!arma.gameObject.activeInHierarchy)
+            return;
 
         arma.AplicarBuff(tipo, porcentagem / 100f);
 
-        painel.SetActive(false);
         eventoAberto = false;
+
+        if (painel != null)
+            painel.SetActive(false);
+
         Time.timeScale = 1f;
     }
 }

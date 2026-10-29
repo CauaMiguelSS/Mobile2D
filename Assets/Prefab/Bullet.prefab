@@ -10,9 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3611132126108393160}
   - component: {fileID: 4985754336651522709}
-  - component: {fileID: 1563791041042163850}
   - component: {fileID: -1836031994565933551}
-  - component: {fileID: -1932648916831840080}
+  - component: {fileID: 3109807460077793732}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -93,21 +92,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1563791041042163850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5176876556872209673}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a251c0821529b974cbc1e28ea27e2b7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Projectile
-  velocidade: 15
-  tempoDeVida: 3
-  dano: 20
 --- !u!61 &-1836031994565933551
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -154,7 +138,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.0030927835, y: 0.0030927835}
   m_EdgeRadius: 0
---- !u!114 &-1932648916831840080
+--- !u!114 &3109807460077793732
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -166,5 +150,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6cc0a65165bbd1438045813c92fe939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponBuff
-  nomeArma: Bullet
+  nomeArma: Arma
   possuiIntervalo: 1

@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public enum TipoBuff
@@ -10,21 +11,22 @@ public enum TipoBuff
 
 public class WeaponBuff : MonoBehaviour
 {
-    [Header("Informações")]
+    [Header("Informações da arma")]
     [SerializeField] private string nomeArma = "Arma";
-    [SerializeField] private bool possuiIntervalo;
+    [SerializeField] private bool possuiIntervalo = true;
 
-    private float danoMultiplier = 1f;
-    private float velocidadeMultiplier = 1f;
-    private float tamanhoMultiplier = 1f;
-    private float intervaloMultiplier = 1f;
+    private float dano = 1f;
+    private float velocidade = 1f;
+    private float tamanho = 1f;
+    private float intervalo = 1f;
 
     public string NomeArma => nomeArma;
-    public float Dano => danoMultiplier;
-    public float Velocidade => velocidadeMultiplier;
-    public float Tamanho => tamanhoMultiplier;
-    public float Intervalo => intervaloMultiplier;
     public bool PossuiIntervalo => possuiIntervalo;
+
+    public float Dano => dano;
+    public float Velocidade => velocidade;
+    public float Tamanho => tamanho;
+    public float Intervalo => intervalo;
 
     public void AplicarBuff(TipoBuff tipo, float porcentagem)
     {
@@ -33,28 +35,25 @@ public class WeaponBuff : MonoBehaviour
         switch (tipo)
         {
             case TipoBuff.Dano:
-                danoMultiplier *= multiplicador;
+                dano *= multiplicador;
                 break;
 
             case TipoBuff.Velocidade:
-                velocidadeMultiplier *= multiplicador;
+                velocidade *= multiplicador;
                 break;
 
             case TipoBuff.Tamanho:
-                tamanhoMultiplier *= multiplicador;
+                tamanho *= multiplicador;
                 break;
 
             case TipoBuff.Intervalo:
-                intervaloMultiplier *= multiplicador;
+                if (possuiIntervalo)
+                    intervalo *= multiplicador;
                 break;
         }
 
         Debug.Log(
-            $"Arma: {nomeArma} | " +
-            $"Dano: {danoMultiplier:F2} | " +
-            $"Velocidade: {velocidadeMultiplier:F2} | " +
-            $"Tamanho: {tamanhoMultiplier:F2} | " +
-            $"Intervalo: {intervaloMultiplier:F2}"
+            $"Buff aplicado em {nomeArma}: {tipo} +{porcentagem * 100f:F0}%"
         );
     }
 }
