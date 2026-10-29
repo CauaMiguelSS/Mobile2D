@@ -1,0 +1,91 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class BossEnemy : MonoBehaviour, IDamageable
+{
+    [Header("Configurações")]
+    [SerializeField] private float velocidade = 1f;
+
+    [Header("Vida")]
+    [SerializeField] private float vidaMaxima = 500f;
+    [SerializeField] private Slider barraVida;
+
+    [Header("Pontuação")]
+    [SerializeField] private int valorInimigo = 5;
+
+    [Header("Referência")]
+    [SerializeField] private Transform player;
+
+    private float vidaAtual;
+
+    public float VidaMaximaBase => vidaMaxima;
+
+    private void Awake()
+    {
+        vidaAtual = vidaMaxima;
+
+        if (barraVida != null)
+            barraVida.value = 1f;
+    }
+
+    private void Update()
+    {
+        if (player == null)
+            return;
+
+        Vector2 direcao =
+            (player.position - transform.position).normalized;
+
+        transform.position +=
+            (Vector3)direcao * velocidade * Time.deltaTime;
+
+        VirarParaPlayer();
+    }
+
+    public void SetVidaMaxima(float novaVida)
+    {
+        vidaMaxima = novaVida;
+        vidaAtual = vidaMaxima;
+
+        if (barraVida != null)
+            barraVida.value = 1f;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        vidaAtual -= damage;
+
+        if (barraVida != null)
+            barraVida.value = vidaAtual / vidaMaxima;
+
+        if (RandomEventManager.Instance != null)
+            RandomEventManager.Instance.RegistrarDano(damage);
+
+        if (vidaAtual <= 0)
+            Morrer();
+    }
+
+    private void Morrer()
+    {
+        EnemyKillManager killManager = FindFirstObjectByType<EnemyKillManager>();
+
+        if (killManager != null)
+        {
+            killManager.InimigoMorreu(transform.position, valorInimigo);
+        }
+
+        Destroy(gameObject);
+    }
+
+    private void VirarParaPlayer()
+    {
+        if (player.position.x > transform.position.x)
+        {
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
+        else if (player.position.x < transform.position.x)
+        {
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
+    }
+}

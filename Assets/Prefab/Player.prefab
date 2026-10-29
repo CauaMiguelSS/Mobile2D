@@ -59,7 +59,7 @@ Transform:
   m_GameObject: {fileID: 2768252530658134341}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -2.78, z: 0}
   m_LocalScale: {x: 0.67235, y: 0.67235, z: 0.67235}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -598,6 +598,7 @@ MonoBehaviour:
   scythePrefab: {fileID: 8759615194202457931, guid: 48268cccc8e7ef94c9541999b3633b4e, type: 3}
   aimingOrbit: {fileID: 3416616310372720447}
   player: {fileID: 5529013766198302729}
+  buff: {fileID: 0}
   intervalo: 7
 --- !u!4 &8285979141068853655 stripped
 Transform:
