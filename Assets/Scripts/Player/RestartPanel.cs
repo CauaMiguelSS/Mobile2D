@@ -8,6 +8,13 @@ public class RestartPanel : MonoBehaviour, IPointerClickHandler
     {
         Time.timeScale = 1f;
 
+        EnemySpawnProgression.Reiniciar();
+
+        if (SpawnIntervalManager.Instance != null)
+        {
+            SpawnIntervalManager.Instance.Reiniciar();
+        }
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
