@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: de05a7da58bb9ff4a90c2572de411a09
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 412078
+  packageName: Timbeaux's 2D Worldbuilding Toolkit
+  packageVersion: 1.0.0
+  assetPath: Assets/2DModularGroundKit/Art/Tilemaps/Tile Palettes/WorldTiles_1.asset
+  uploadId: 1006882

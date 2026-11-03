@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 1a12d037c98d3b041a4ac81d0be3afd1
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 412078
+  packageName: Timbeaux's 2D Worldbuilding Toolkit
+  packageVersion: 1.0.0
+  assetPath: Assets/2DModularGroundKit/Documentation/README.txt
+  uploadId: 1006882

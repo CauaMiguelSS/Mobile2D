@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 3056335a97ec95a4b886bac1dd0241db
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 412078
+  packageName: Timbeaux's 2D Worldbuilding Toolkit
+  packageVersion: 1.0.0
+  assetPath: Assets/2DModularGroundKit/Demo/Prefabs/FireflyYellow.prefab
+  uploadId: 1006882

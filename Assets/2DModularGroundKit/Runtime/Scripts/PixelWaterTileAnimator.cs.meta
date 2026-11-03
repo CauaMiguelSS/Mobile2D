@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: b15976ce89f3d244a9db7e5d8697af44
+AssetOrigin:
+  serializedVersion: 1
+  productId: 412078
+  packageName: Timbeaux's 2D Worldbuilding Toolkit
+  packageVersion: 1.0.0
+  assetPath: Assets/2DModularGroundKit/Runtime/Scripts/PixelWaterTileAnimator.cs
+  uploadId: 1006882

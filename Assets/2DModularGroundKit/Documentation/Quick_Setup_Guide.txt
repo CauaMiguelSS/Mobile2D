@@ -1,0 +1,109 @@
+2D MODULAR GROUND KIT - QUICK SETUP GUIDE
+v1.0.0
+Created in Unity 6.2
+
+1. OPEN THE SAMPLE SCENE
+Start by opening the included scene under Demo/Scenes. It demonstrates the intended look and shows the water, shoreline, biome blend, ambient animation, camera-tour, and sample audio systems working together.
+
+2. PAINT TERRAIN WITH THE TILE PALETTE
+The included Tile Palette is stored under Art/Tiles/Tile Palettes.
+
+Create or select a Unity Grid and Tilemap, open the Tile Palette window, select the supplied palette, and paint terrain normally with Unity's Tilemap tools.
+
+The pack includes terrain for grass, dry grasslands, snow, desert, beach, corrupted lands, paths, water, borders, and environmental details.
+
+3. OPTIONAL: CUSTOMIZE THE MASTER ART IN GIMP
+The master spritesheet .xcf file is included with the package.
+
+The source file keeps grass, paths, terrain elements, and other source artwork separated onto individual layers. Open it in GIMP if you want to create your own additional combinations, recolors, or edits before exporting new sprites for Unity.
+
+4. ANIMATED OPEN WATER
+Use PixelWaterTileAnimator on the Tilemap that contains full-water tiles.
+
+Setup:
+- Add PixelWaterTileAnimator to the water Tilemap.
+- Add the full-water sprite or sprites to Water Sprites.
+- Do not add shoreline sprites to this list.
+- Set Frame Time to control the animation speed. The default is 0.25 seconds.
+
+The script finds cells using those sprites and animates them with synchronized flip / rotation transform states.
+
+5. STRAIGHT SHORELINE WAVES
+Use ShorelineWaveController2D on straight shoreline Tilemaps using the supplied ShorelineCrash2D material / shader.
+
+Set Water Side to match the side of the shoreline that faces water:
+- Up
+- Down
+- Left
+- Right
+
+You can tune:
+- Wave Speed
+- Crash Distance
+- Foam Strength
+- Wet Darkness
+- Phase Offset
+
+6. SHORELINE CORNERS
+Use ShorelineCornerWaveController2D on the shoreline-corner Tilemap using the supplied ShorelineCornerCrash2D material / shader.
+
+Assign the Water Tilemap. If it is left unassigned, the script also attempts to find a sibling / child object named Water under the same parent hierarchy.
+
+Use the component context command Detect Corner Directions whenever you need to refresh corner orientation metadata.
+
+7. PROCEDURAL BIOME BLENDING
+Add BiomeBlendController2D to a parent object and add the Tilemaps you want it to use to Source Tilemaps.
+
+Create child objects with BiomeBlendZone2D. Each zone uses a BoxCollider2D as its editable bounds.
+
+Same Tilemap mode:
+Use this when both sides of the transition are represented on the same Tilemap.
+
+Cross Tilemap mode:
+Use this when one biome is on one Tilemap and the other biome is on another Tilemap, such as Ground blending into Water.
+
+For Cross Tilemap mode:
+- Set Blend Source Mode to Cross Tilemap.
+- Assign Start Tilemap.
+- Assign End Tilemap.
+- Choose the Blend Direction.
+
+Blend directions:
+- Left To Right
+- Right To Left
+- Bottom To Top
+- Top To Bottom
+
+Transition controls:
+- Irregularity controls how strongly procedural breakup affects the blend.
+- Noise Block Size controls the size of the pixel clusters.
+- Seed changes the procedural pattern.
+
+After setup, use Rebuild Biome Transitions on the controller. Generated overlay objects appear under __GeneratedBiomeBlend.
+
+The generated blend uses transparent overlay pixels so animated source tiles such as water can remain visible and continue animating underneath.
+
+8. SAMPLE-SCENE CAMERA TOUR
+DemoCameraTour2D is a demo helper attached to a Camera.
+
+Each stop can define:
+- Target Transform
+- Travel Time
+- Pause Time
+- Optional zoom change
+- Optional stop sound and volume
+
+The tour supports a movement curve, pixel snapping, looping, and one-shot audio when the camera reaches each stop.
+
+9. DEMO-ONLY COZY SCRIPTS
+CozyFirefly2D and CozyTumbleweed2D are sample-scene helpers. They are included so you can study or reuse them, but they are not required for the ground tiles themselves.
+
+10. IF SOMETHING LOOKS WRONG
+- Confirm the shoreline Tilemap is using the correct supplied material.
+- Confirm Water Side is correct on straight shoreline controllers.
+- Confirm the corner controller can reference the Water Tilemap.
+- If a biome blend is missing, confirm the zone mode matches your setup: Same Tilemap or Cross Tilemap.
+- Rebuild the biome transitions after changing zone settings.
+- Use a URP 2D project for the supplied lit shoreline shaders and Light2D demo effects.
+
+For complete details, see 2D_Modular_Ground_Kit_Full_Documentation.pdf.

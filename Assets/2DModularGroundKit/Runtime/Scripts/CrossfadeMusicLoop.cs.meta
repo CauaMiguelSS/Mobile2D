@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 2136bd5bcd7461545a73592a65ba1adb
+AssetOrigin:
+  serializedVersion: 1
+  productId: 412078
+  packageName: Timbeaux's 2D Worldbuilding Toolkit
+  packageVersion: 1.0.0
+  assetPath: Assets/2DModularGroundKit/Runtime/Scripts/CrossfadeMusicLoop.cs
+  uploadId: 1006882

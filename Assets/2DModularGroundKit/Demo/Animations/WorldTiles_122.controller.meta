@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6af628eb2e034d342ae5968358b97e1f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 412078
+  packageName: Timbeaux's 2D Worldbuilding Toolkit
+  packageVersion: 1.0.0
+  assetPath: Assets/2DModularGroundKit/Demo/Animations/WorldTiles_122.controller
+  uploadId: 1006882

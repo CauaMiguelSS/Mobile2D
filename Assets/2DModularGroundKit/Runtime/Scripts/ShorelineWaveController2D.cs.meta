@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 334dbca9c061446419d1fa8353cdf53c
+AssetOrigin:
+  serializedVersion: 1
+  productId: 412078
+  packageName: Timbeaux's 2D Worldbuilding Toolkit
+  packageVersion: 1.0.0
+  assetPath: Assets/2DModularGroundKit/Runtime/Scripts/ShorelineWaveController2D.cs
+  uploadId: 1006882

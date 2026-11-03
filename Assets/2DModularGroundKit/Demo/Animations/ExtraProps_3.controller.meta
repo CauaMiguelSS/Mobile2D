@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: be48572aba6a23f478f19fc01f58aeb9
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 412078
+  packageName: Timbeaux's 2D Worldbuilding Toolkit
+  packageVersion: 1.0.0
+  assetPath: Assets/2DModularGroundKit/Demo/Animations/ExtraProps_3.controller
+  uploadId: 1006882

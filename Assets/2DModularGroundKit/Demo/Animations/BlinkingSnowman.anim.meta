@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: bb783b0403f51b34995769e53f21727c
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 412078
+  packageName: Timbeaux's 2D Worldbuilding Toolkit
+  packageVersion: 1.0.0
+  assetPath: Assets/2DModularGroundKit/Demo/Animations/BlinkingSnowman.anim
+  uploadId: 1006882

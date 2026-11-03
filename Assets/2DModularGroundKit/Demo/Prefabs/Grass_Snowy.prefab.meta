@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 99638d61c6a115e409cb6ff53a5179f7
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 412078
+  packageName: Timbeaux's 2D Worldbuilding Toolkit
+  packageVersion: 1.0.0
+  assetPath: Assets/2DModularGroundKit/Demo/Prefabs/Grass_Snowy.prefab
+  uploadId: 1006882

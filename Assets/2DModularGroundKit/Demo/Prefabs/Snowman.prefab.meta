@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: deaf619fc240eb74b91e4525a1b21d5d
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 412078
+  packageName: Timbeaux's 2D Worldbuilding Toolkit
+  packageVersion: 1.0.0
+  assetPath: Assets/2DModularGroundKit/Demo/Prefabs/Snowman.prefab
+  uploadId: 1006882

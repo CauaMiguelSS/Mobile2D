@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: cdceabbb442f3314c939aa1b40e2265d
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 412078
+  packageName: Timbeaux's 2D Worldbuilding Toolkit
+  packageVersion: 1.0.0
+  assetPath: Assets/2DModularGroundKit/Art/Tilemaps/ModularGroundKitSampleTilemap.prefab
+  uploadId: 1006882

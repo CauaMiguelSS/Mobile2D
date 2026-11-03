@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 04ed0e2f03a02e845a6a40cb4153c0f5
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 412078
+  packageName: Timbeaux's 2D Worldbuilding Toolkit
+  packageVersion: 1.0.0
+  assetPath: Assets/2DModularGroundKit/Demo/Animations/FrogIdle.anim
+  uploadId: 1006882

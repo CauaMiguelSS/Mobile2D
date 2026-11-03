@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: bb7c0ef3cca4dc0418143c7a4ad57154
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 412078
+  packageName: Timbeaux's 2D Worldbuilding Toolkit
+  packageVersion: 1.0.0
+  assetPath: Assets/2DModularGroundKit/Runtime/Shaders/ShorelineCornerCrash2D.shader
+  uploadId: 1006882

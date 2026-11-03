@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: ecbf9439611c93148999cf0be32adb9a
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 412078
+  packageName: Timbeaux's 2D Worldbuilding Toolkit
+  packageVersion: 1.0.0
+  assetPath: Assets/2DModularGroundKit/Documentation/Quick_Setup_Guide.txt
+  uploadId: 1006882
