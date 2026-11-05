@@ -40,6 +40,7 @@ public class Projectile : MonoBehaviour
             (Vector3)(direcao * velocidade * Time.deltaTime);
     }
 
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Limite"))
@@ -48,13 +49,15 @@ public class Projectile : MonoBehaviour
             return;
         }
 
-        if (!other.CompareTag("Enemy"))
+        int enemyLayer = LayerMask.NameToLayer("Enemy");
+
+        if (other.gameObject.layer != enemyLayer)
             return;
 
-        IDamageable alvo = other.GetComponent<IDamageable>();
+        IDamageable damageable = other.GetComponent<IDamageable>();
 
-        if (alvo != null)
-            alvo.TakeDamage(dano);
+        if (damageable != null)
+            damageable.TakeDamage(dano);
 
         Destroy(gameObject);
     }
