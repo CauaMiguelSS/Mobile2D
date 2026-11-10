@@ -6,8 +6,18 @@ public class Projectile : MonoBehaviour
     [Header("Configurações")]
     [SerializeField] private float velocidade = 10f;
     [SerializeField] private float dano = 10f;
+    [Header("Tempo de vida")]
+    [SerializeField] private float tempoDeVida = 3f;
+
+    private bool ehClone;
 
     private Vector2 direcao;
+
+    public void ConfigurarClone()
+    {
+        ehClone = true;
+        Destroy(gameObject, tempoDeVida);
+    }
 
     public void SetDirection(Vector2 novaDirecao)
     {

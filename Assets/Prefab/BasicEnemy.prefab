@@ -191,6 +191,7 @@ GameObject:
   - component: {fileID: -4378311405270758643}
   - component: {fileID: 9215240935665689240}
   - component: {fileID: 2799950246883013367}
+  - component: {fileID: 4611060464292848829}
   m_Layer: 6
   m_Name: BasicEnemy
   m_TagString: Enemy
@@ -384,6 +385,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4611060464292848829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7828947405036067863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bca839e07e15f9f4a95c6c83c9d4d623, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AtivarObjetoAoTocar
+  objetoParaAtivar: {fileID: 0}
 --- !u!1 &7916041766739498085
 GameObject:
   m_ObjectHideFlags: 0

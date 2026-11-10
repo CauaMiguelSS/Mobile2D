@@ -68,6 +68,7 @@ public class AutoShoot : MonoBehaviour
             return;
         }
 
+        script.ConfigurarClone();
         script.SetDirection(arma.aimingOrbit.Direcao);
         script.AplicarBuff(arma.buff);
     }
