@@ -16,6 +16,10 @@ public class BossEnemy : MonoBehaviour, IDamageable
     [Header("Referência")]
     [SerializeField] private Transform player;
 
+    [Header("Áudio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip somDano;
+
     private float vidaAtual;
 
     public float VidaMaximaBase => vidaMaxima;
@@ -54,6 +58,9 @@ public class BossEnemy : MonoBehaviour, IDamageable
     public void TakeDamage(float damage)
     {
         vidaAtual -= damage;
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.TocarImpacto();
 
         if (barraVida != null)
             barraVida.value = vidaAtual / vidaMaxima;

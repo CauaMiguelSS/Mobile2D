@@ -11,6 +11,10 @@ public class Shovel : MonoBehaviour
     [Header("Dano")]
     [SerializeField] private float danoPorSegundo = 20f;
 
+    [Header("Áudio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip somAtivacao;
+
     private WeaponBuff buff;
     private Vector3 escalaOriginal;
     private float angulo;
@@ -60,11 +64,8 @@ public class Shovel : MonoBehaviour
 
         IDamageable inimigo = other.GetComponent<IDamageable>();
 
-        if (inimigo != null)
-        {
-            inimigo.TakeDamage(
-                danoPorSegundo * buff.Dano * Time.deltaTime
-            );
-        }
+        float melhoria = MelhoriasArmas.Multiplicador(MelhoriasArmas.Pa);
+
+        inimigo.TakeDamage(danoPorSegundo * buff.Dano * melhoria * Time.deltaTime);
     }
 }

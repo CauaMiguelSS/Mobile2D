@@ -11,6 +11,10 @@ public class AutoShoot : MonoBehaviour
         public GameObject projectilePrefab;
         public Transform pontoDeTiro;
         public AimingOrbit aimingOrbit;
+        public string idMelhoria = "Projetil";
+
+        [Header("Áudio")]
+        public AudioClip somDisparo;
 
         [Min(0.01f)]
         public float intervaloTiro = 0.5f;
@@ -20,6 +24,10 @@ public class AutoShoot : MonoBehaviour
 
     [Header("Armas")]
     [SerializeField] private ConfiguracaoArma[] armas;
+
+    [Header("Áudio")]
+    [SerializeField] private AudioSource audioSource;
+    public AudioClip somDisparo;
 
     private void Update()
     {
@@ -54,6 +62,11 @@ public class AutoShoot : MonoBehaviour
 
     private void Atirar(ConfiguracaoArma arma)
     {
+        if (audioSource != null && arma.somDisparo != null)
+        {
+            audioSource.PlayOneShot(arma.somDisparo);
+        }
+
         GameObject projetil = Instantiate(
             arma.projectilePrefab,
             arma.pontoDeTiro.position,
@@ -71,5 +84,6 @@ public class AutoShoot : MonoBehaviour
         script.ConfigurarClone();
         script.SetDirection(arma.aimingOrbit.Direcao);
         script.AplicarBuff(arma.buff);
+        script.AplicarMelhoriaLoja(arma.idMelhoria);
     }
 }

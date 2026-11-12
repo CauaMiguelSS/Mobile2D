@@ -15,6 +15,10 @@ public class Pitchfork : MonoBehaviour
     [Header("Layers")]
     [SerializeField] private LayerMask wallLayer;
 
+    [Header("Áudio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip somLancamento;
+
     private Rigidbody2D rb;
     private Vector2 direction;
     private WeaponBuff buff;
@@ -28,6 +32,9 @@ public class Pitchfork : MonoBehaviour
 
     public void Launch(Vector2 newDirection, WeaponBuff weaponBuff)
     {
+        if (audioSource != null && somLancamento != null)
+            audioSource.PlayOneShot(somLancamento);
+
         buff = weaponBuff;
 
         if (buff == null)
@@ -93,8 +100,16 @@ public class Pitchfork : MonoBehaviour
 
         IDamageable enemy = other.GetComponent<IDamageable>();
 
-        if (enemy != null)
-            enemy.TakeDamage(damagePerSecond * buff.Dano * Time.deltaTime);
+        float melhoria = MelhoriasArmas.Multiplicador(
+            MelhoriasArmas.Tridente
+        );
+
+        enemy.TakeDamage(
+            damagePerSecond *
+            buff.Dano *
+            melhoria *
+            Time.deltaTime
+        );
     }
 
     private void RotateToDirection()

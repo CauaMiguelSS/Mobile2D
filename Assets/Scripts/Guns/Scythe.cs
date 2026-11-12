@@ -10,6 +10,9 @@ public class Scythe : MonoBehaviour
 
     [Header("Dano")]
     [SerializeField] private float dano = 10f;
+    [Header("Áudio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip somLancamento;
 
     private Vector2 direcao;
     private Vector3 posicaoInicial;
@@ -17,6 +20,8 @@ public class Scythe : MonoBehaviour
 
     public void Lancar(Vector2 novaDirecao)
     {
+        if (audioSource != null && somLancamento != null)
+            audioSource.PlayOneShot(somLancamento);
         direcao = novaDirecao.normalized;
         posicaoInicial = transform.position;
     }
@@ -84,7 +89,7 @@ public class Scythe : MonoBehaviour
             return;
         }
 
-        dano *= buff.Dano;
+        dano *= buff.Dano * MelhoriasArmas.Multiplicador(MelhoriasArmas.Foice);
         velocidade *= buff.Velocidade;
         transform.localScale *= buff.Tamanho;
     }

@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -8,6 +7,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float dano = 10f;
     [Header("Tempo de vida")]
     [SerializeField] private float tempoDeVida = 3f;
+    public AudioClip somDisparo;
 
     private bool ehClone;
 
@@ -70,5 +70,9 @@ public class Projectile : MonoBehaviour
             damageable.TakeDamage(dano);
 
         Destroy(gameObject);
+    }
+    public void AplicarMelhoriaLoja(string idArma)
+    {
+        dano *= MelhoriasArmas.Multiplicador(idArma);
     }
 }

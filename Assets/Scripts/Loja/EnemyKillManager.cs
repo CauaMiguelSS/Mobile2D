@@ -18,6 +18,10 @@ public class EnemyKillManager : MonoBehaviour
     [SerializeField] private TMP_Text textoMoedasGanhos;
     [SerializeField] private TMP_Text textoSaldoTotal;
 
+    [Header("Áudio")]
+    [SerializeField] private AudioSource musicaGameplay;
+    [SerializeField] private AudioSource musicaDerrota;
+
     private int inimigosMortos;
     private int bausCriados;
     private int pontos;
@@ -30,7 +34,7 @@ public class EnemyKillManager : MonoBehaviour
 
     private void Start()
     {
-        saldoTotal = PlayerPrefs.GetInt(CHAVE_MOEDAS, 0);
+        saldoTotal = EconomiaJogo.Saldo;
 
         if (painelResultado != null)
             painelResultado.SetActive(false);
@@ -56,18 +60,18 @@ public class EnemyKillManager : MonoBehaviour
         }
     }
 
+
     public void FinalizarPartida()
     {
-        if (partidaFinalizada)
-            return;
+        if (partidaFinalizada) return;
 
         partidaFinalizada = true;
 
         moedas = pontos / 100;
-        saldoTotal += moedas;
 
-        PlayerPrefs.SetInt(CHAVE_MOEDAS, saldoTotal);
-        PlayerPrefs.Save();
+        EconomiaJogo.Adicionar(moedas);
+
+        saldoTotal = EconomiaJogo.Saldo;
 
         if (painelResultado != null)
             painelResultado.SetActive(true);
@@ -78,8 +82,20 @@ public class EnemyKillManager : MonoBehaviour
         if (textoSaldoTotal != null)
             textoSaldoTotal.text = saldoTotal.ToString();
 
-        Debug.Log("Moedas ganhas: " + moedas);
+        if (musicaGameplay != null)
+            musicaGameplay.Stop();
+
+        if (musicaDerrota != null)
+        {
+            musicaDerrota.loop = false;
+            musicaDerrota.Play();
+        }
+
+        Debug.Log("Pontos finais: " + pontos);
+        Debug.Log("Moedas recebidas: " + moedas);
+        Debug.Log("Saldo total: " + saldoTotal);
     }
+
 
     private void AtualizarTexto()
     {

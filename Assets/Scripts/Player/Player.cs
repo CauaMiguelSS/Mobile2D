@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -8,10 +9,15 @@ public class Player : MonoBehaviour
 
     [Header("Referências")]
     [SerializeField] private AimingOrbit aimingOrbit;
+    [SerializeField] private EnemyKillManager killManager;
 
     private SpriteRenderer spriteRenderer;
-
     private bool morreu;
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     private void Start()
     {
@@ -20,18 +26,12 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (morreu) return;
+
         if (aimingOrbit.Direcao.x > 0)
-        {
             spriteRenderer.flipX = false;
-        }
         else if (aimingOrbit.Direcao.x < 0)
-        {
             spriteRenderer.flipX = true;
-        }
-    }
-    private void Awake()
-    {
-        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -44,19 +44,16 @@ public class Player : MonoBehaviour
         Morrer();
     }
 
-    private void Morrer()
+    public void Morrer()
     {
-        if (morreu)
-            return;
+        if (morreu) return;
 
         morreu = true;
 
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        killManager.FinalizarPartida();
 
         if (spriteRenderer != null && spriteMorte != null)
-        {
             spriteRenderer.sprite = spriteMorte;
-        }
 
         painelMorte.SetActive(true);
 
